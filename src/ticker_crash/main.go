@@ -22,7 +22,7 @@ func led2() {
 	led := machine.LED_BLUE
 	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 
-	t := time.NewTicker(time.Millisecond * 49)
+	t := time.NewTicker(time.Millisecond * 2)
 	s := bool(false)
 	for range t.C {
 		if s {
