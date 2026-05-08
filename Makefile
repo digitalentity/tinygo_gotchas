@@ -6,7 +6,7 @@ TOOLCHAIN_DIR  := toolchain
 TINYGO         := $(TOOLCHAIN_DIR)/tinygo/bin/tinygo
 
 GOOPTS := 	-size=short \
-			-opt=1 \
+			-opt=s \
 			-panic=trap \
 			-gc=conservative \
 			-scheduler=tasks \
@@ -28,14 +28,18 @@ install-toolchain:
 	mkdir -p $(TOOLCHAIN_DIR)
 	curl -L https://github.com/tinygo-org/tinygo/releases/download/v$(TINYGO_VERSION)/tinygo$(TINYGO_VERSION).linux-amd64.tar.gz | tar -xzC $(TOOLCHAIN_DIR)
 
-# ── demo applications ──────────────────────────────────────────────────────────
+# ── demo application: alloc on heap ────────────────────────────────────────────
 
 build-alloc-woes: test-toolchain | $(BUILD)
-	$(TINYGO) build $(GOOPTS) -target=$(GOTARGET) -o $(BUILD)/$(BINARY)-$*.hex ./src/alloc_woes
+	$(TINYGO) build $(GOOPTS) -target=$(GOTARGET) -o $(BUILD)/$(BINARY).hex ./src/alloc_woes
 
 test-alloc-woes:
 	$(TINYGO) test -v ./src/alloc_woes/
 
+# ── demo application: ticker causing hang ───────────────────────────────────────
+
+build-ticker-crash: test-toolchain | $(BUILD)
+	$(TINYGO) build $(GOOPTS) -target=$(GOTARGET) -o $(BUILD)/$(BINARY).hex ./src/ticker_crash
 
 # ── misc ───────────────────────────────────────────────────────────────────────
 
