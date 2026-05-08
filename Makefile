@@ -39,7 +39,15 @@ test-alloc-woes:
 # ── demo application: ticker causing hang ───────────────────────────────────────
 
 build-ticker-crash: test-toolchain | $(BUILD)
-	$(TINYGO) build $(GOOPTS) -target=$(GOTARGET) -o $(BUILD)/$(BINARY).hex ./src/ticker_crash
+	$(TINYGO) build $(GOOPTS) -target=$(GOTARGET) -o $(BUILD)/$(BINARY).elf ./src/ticker_crash
+
+flash-ticker-crash: test-toolchain | $(BUILD)
+	$(TINYGO) flash $(GOOPTS) -target=$(GOTARGET) ./src/ticker_crash
+
+debug-ticker-crash: test-toolchain | $(BUILD)
+	$(TINYGO) gdb $(GOOPTS) -target=$(GOTARGET) ./src/ticker_crash
+
+
 
 # ── misc ───────────────────────────────────────────────────────────────────────
 

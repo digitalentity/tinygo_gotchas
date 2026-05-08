@@ -19,6 +19,22 @@ func led1() {
 }
 
 func led2() {
+	led := machine.LED_BLUE
+	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
+
+	t := time.NewTicker(time.Millisecond * 49)
+	s := bool(false)
+	for range t.C {
+		if s {
+			led.Low()
+		} else {
+			led.High()
+		}
+		s = !s
+	}
+}
+
+func led3() {
 	led := machine.LED_RED
 	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 
@@ -34,9 +50,22 @@ func led2() {
 	}
 }
 
+func printstat() {
+	ms := runtime.MemStats{}
+	for {
+		runtime.ReadMemStats(&ms)
+		println("Used: ", ms.HeapInuse, " Free: ", ms.HeapIdle, " Meta: ", ms.GCSys)
+		time.Sleep(1 * time.Second)
+	}
+}
+
 func main() {
+	println("Starting!")
+
 	go led1()
 	go led2()
+	go led3()
+	// go printstat()
 
 	for {
 		runtime.Gosched()
