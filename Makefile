@@ -12,7 +12,7 @@ GOOPTS := 	-size=short \
 			-scheduler=tasks \
 			-print-allocs=.
 
-GOTARGET := rp2040
+GOTARGET := nucleo-f722ze
 
 # ── toolchain ──────────────────────────────────────────────────────────────────
 
@@ -31,7 +31,7 @@ install-toolchain:
 # ── demo applications ──────────────────────────────────────────────────────────
 
 build-alloc-woes: test-toolchain | $(BUILD)
-	$(TINYGO) build $(GOOPTS) -target=$(TARGET) -o $(BUILD)/$(BINARY)-$*.hex ./src/alloc_woes
+	$(TINYGO) build $(GOOPTS) -target=$(GOTARGET) -o $(BUILD)/$(BINARY)-$*.hex ./src/alloc_woes
 
 test-alloc-woes:
 	$(TINYGO) test -v ./src/alloc_woes/
