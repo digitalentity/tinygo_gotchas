@@ -22,7 +22,7 @@ func led2() {
 	led := machine.LED_BLUE
 	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 
-	t := time.NewTicker(time.Millisecond * 2)
+	t := time.NewTicker(time.Millisecond * 20)
 	s := bool(false)
 	for range t.C {
 		if s {
@@ -38,7 +38,7 @@ func led3() {
 	led := machine.LED_RED
 	led.Configure(machine.PinConfig{Mode: machine.PinOutput})
 
-	t := time.NewTicker(time.Millisecond * 500)
+	t := time.NewTicker(time.Millisecond * 499)
 	s := bool(false)
 	for range t.C {
 		if s {
@@ -61,6 +61,9 @@ func printstat() {
 
 func main() {
 	println("Starting!")
+
+	// Disable NVIC UART interrupt
+	machine.DefaultUART.Interrupt.Disable()
 
 	go led1()
 	go led2()

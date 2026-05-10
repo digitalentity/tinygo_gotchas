@@ -6,7 +6,7 @@ TOOLCHAIN_DIR  := toolchain
 TINYGO         := $(TOOLCHAIN_DIR)/tinygo/bin/tinygo
 
 GOOPTS := 	-size=short \
-			-opt=s \
+			-opt=1 \
 			-panic=trap \
 			-gc=conservative \
 			-scheduler=tasks \
